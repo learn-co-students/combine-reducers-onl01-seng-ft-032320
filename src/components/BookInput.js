@@ -20,6 +20,7 @@ export class BookInput extends Component {
   handleOnSubmit = event => {
     event.preventDefault();
     const book = {...this.state, id: uuid() };
+    debugger
     this.props.addBook(book);
     this.setState({
       title: '',
@@ -52,4 +53,25 @@ export class BookInput extends Component {
   }
 };
 
-export default connect(null, { addBook })(BookInput);
+const mapDispatchToProps = dispatch => {
+  return {
+    addBook: (book) => {
+      dispatch(addBook(book)) //addBook is the action
+    }
+  }
+}
+
+// this is what addBook return and is the actions index file
+// export const addBook = book => {
+//   return {
+//     type: 'ADD_BOOK',
+//     book
+//   };
+// };
+
+
+export default connect(null, mapDispatchToProps)(BookInput);
+
+// when this.props.addBook(book) gets hit the dispatch is call with teh action
+// mention above which in turns calls the reducer. Just know the reducer is smart enought 
+// to know that as long as the Action Type matches regarding witch reducer it is the reducer will be enter
